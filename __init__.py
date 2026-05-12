@@ -16,26 +16,28 @@ from bpy_extras.io_utils import ExportHelper, ImportHelper
 # NOTE: in case of variations to the modifiers list, change in both AVAILABLE_MODIFIERS, and in the PinnedModifiersPreferences class.
 
 AVAILABLE_MODIFIERS = {
+    # --- EDIT SECTION ---
     'pin_data_transfer': ("Data Transfer", 'DATA_TRANSFER', 'MOD_DATA_TRANSFER'),
     'pin_mesh_cache': ("Mesh Cache", 'MESH_CACHE', 'MOD_MESHDEFORM'),
     'pin_mesh_sequence_cache': ("Mesh Sequence Cache", 'MESH_SEQUENCE_CACHE', 'MOD_MESHDEFORM'),
-    'pin_normal_edit': ("Normal Edit", 'NORMAL_EDIT', 'MOD_NORMALEDIT'),
-    'pin_weighted_normal': ("Weighted Normal", 'WEIGHTED_NORMAL', 'MOD_NORMALEDIT'),
     'pin_uv_project': ("UV Project", 'UV_PROJECT', 'MOD_UVPROJECT'),
     'pin_uv_warp': ("UV Warp", 'UV_WARP', 'MOD_UVPROJECT'),
     'pin_vertex_weight_edit': ("Vertex Weight Edit", 'VERTEX_WEIGHT_EDIT', 'MOD_VERTEX_WEIGHT'),
     'pin_vertex_weight_mix': ("Vertex Weight Mix", 'VERTEX_WEIGHT_MIX', 'MOD_VERTEX_WEIGHT'),
     'pin_vertex_weight_proximity': ("Vertex Weight Proximity", 'VERTEX_WEIGHT_PROXIMITY', 'MOD_VERTEX_WEIGHT'),
+    # --- GENERATE SECTION ---
     'pin_array': ("Array", 'ARRAY', 'MOD_ARRAY'),
     'pin_bevel': ("Bevel", 'BEVEL', 'MOD_BEVEL'),
     'pin_boolean': ("Boolean", 'BOOLEAN', 'MOD_BOOLEAN'),
     'pin_build': ("Build", 'BUILD', 'MOD_BUILD'),
+# MISSING CURVE TO TUBE
     'pin_decimate': ("Decimate", 'DECIMATE', 'MOD_DECIM'),
     'pin_edge_split': ("Edge Split", 'EDGE_SPLIT', 'MOD_EDGESPLIT'),
     'pin_mask': ("Mask", 'MASK', 'MOD_MASK'),
     'pin_mirror': ("Mirror", 'MIRROR', 'MOD_MIRROR'),
     'pin_multires': ("Multiresolution", 'MULTIRES', 'MOD_MULTIRES'),
     'pin_remesh': ("Remesh", 'REMESH', 'MOD_REMESH'),
+# SCATTER ON SURFACE
     'pin_screw': ("Screw", 'SCREW', 'MOD_SCREW'),
     'pin_skin': ("Skin", 'SKIN', 'MOD_SKIN'),
     'pin_solidify': ("Solidify", 'SOLIDIFY', 'MOD_SOLIDIFY'),
@@ -44,6 +46,7 @@ AVAILABLE_MODIFIERS = {
     'pin_volume_to_mesh': ("Volume to Mesh", 'VOLUME_TO_MESH', 'VOLUME_DATA'),
     'pin_weld': ("Weld", 'WELD', 'AUTOMERGE_OFF'),
     'pin_wireframe': ("Wireframe", 'WIREFRAME', 'MOD_WIREFRAME'),
+    # --- DEFORM SECTION ---
     'pin_armature': ("Armature", 'ARMATURE', 'MOD_ARMATURE'),
     'pin_cast': ("Cast", 'CAST', 'MOD_CAST'),
     'pin_curve': ("Curve", 'CURVE', 'MOD_CURVE'),
@@ -60,6 +63,11 @@ AVAILABLE_MODIFIERS = {
     'pin_surface_deform': ("Surface Deform", 'SURFACE_DEFORM', 'MOD_MESHDEFORM'),
     'pin_warp': ("Warp", 'WARP', 'MOD_WARP'),
     'pin_wave': ("Wave", 'WAVE', 'MOD_WAVE'),
+    # --- NORMALS SECTION ---
+    'pin_normal_edit': ("Normal Edit", 'NORMAL_EDIT', 'MOD_NORMALEDIT'),
+    'pin_weighted_normal': ("Weighted Normal", 'WEIGHTED_NORMAL', 'MOD_NORMALEDIT'),
+    # missing smooth by angle
+    # --- PHYSICS SECTION ---
     'pin_cloth': ("Cloth", 'CLOTH', 'MOD_CLOTH'),
     'pin_collision': ("Collision", 'COLLISION', 'MOD_PHYSICS'),
     'pin_dynamic_paint': ("Dynamic Paint", 'DYNAMIC_PAINT', 'MOD_DYNAMICPAINT'),
@@ -283,16 +291,16 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
         update=save_settings
     )
 
+    # --- EDIT SECTION ---
     pin_data_transfer: make_prop("Data Transfer", False)
     pin_mesh_cache: make_prop("Mesh Cache", False)
     pin_mesh_sequence_cache: make_prop("Mesh Sequence Cache", False)
-    pin_normal_edit: make_prop("Normal Edit", False)
-    pin_weighted_normal: make_prop("Weighted Normal", False)
     pin_uv_project: make_prop("UV Project", False)
     pin_uv_warp: make_prop("UV Warp", False)
     pin_vertex_weight_edit: make_prop("Vertex Weight Edit", False)
     pin_vertex_weight_mix: make_prop("Vertex Weight Mix", False)
     pin_vertex_weight_proximity: make_prop("Vertex Weight Proximity", False)
+    # --- GENERATE SECTION ---
     pin_array: make_prop("Array", True)
     pin_bevel: make_prop("Bevel", True)
     pin_boolean: make_prop("Boolean", True)
@@ -311,6 +319,7 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
     pin_volume_to_mesh: make_prop("Volume to Mesh", False)
     pin_weld: make_prop("Weld", True)
     pin_wireframe: make_prop("Wireframe", False)
+    # --- DEFORM SECTION ---
     pin_armature: make_prop("Armature", False)
     pin_cast: make_prop("Cast", False)
     pin_curve: make_prop("Curve", False)
@@ -327,6 +336,10 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
     pin_surface_deform: make_prop("Surface Deform", False)
     pin_warp: make_prop("Warp", False)
     pin_wave: make_prop("Wave", False)
+    # --- NORMALS SECTION ---
+    pin_normal_edit: make_prop("Normal Edit", False)
+    pin_weighted_normal: make_prop("Weighted Normal", False)
+    # --- PHYSICS SECTION ---
     pin_cloth: make_prop("Cloth", False)
     pin_collision: make_prop("Collision", False)
     pin_dynamic_paint: make_prop("Dynamic Paint", False)

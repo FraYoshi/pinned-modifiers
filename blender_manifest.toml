@@ -7,7 +7,7 @@ version = "1.0.0"
 type = "add-on"
 
 tags = ["User Interface", "Modeling"]
-blender_version_min = "4.2.0"
+blender_version_min = "4.3.0"
 maintainer = "Francesco Yoshi Gobbo <dev@furayoshi.com>"
 license = ["SPDX:GPL-3.0-or-later"]
 

@@ -2,9 +2,9 @@ bl_info = {
     "name": "Pinned Modifiers",
     "author": "Francesco Yoshi Gobbo",
     "version": (1, 0, 0),
-    "blender": (4, 2, 0),
+    "blender": (4, 3, 0),
     "location": "Properties > Modifiers > Add Modifier",
-    "description": "Pins favorite modifiers to the Add Modifier menu with permanent settings.",
+    "description": "Pins favorite modifiers setups to the Add Modifier menu.",
     "category": "Interface",
 }
 
@@ -17,66 +17,71 @@ from bpy_extras.io_utils import ExportHelper, ImportHelper
 
 AVAILABLE_MODIFIERS = {
     # --- EDIT SECTION ---
-    'pin_data_transfer': ("Data Transfer", 'DATA_TRANSFER', 'MOD_DATA_TRANSFER'),
-    'pin_mesh_cache': ("Mesh Cache", 'MESH_CACHE', 'MOD_MESHDEFORM'),
-    'pin_mesh_sequence_cache': ("Mesh Sequence Cache", 'MESH_SEQUENCE_CACHE', 'MOD_MESHDEFORM'),
-    'pin_uv_project': ("UV Project", 'UV_PROJECT', 'MOD_UVPROJECT'),
-    'pin_uv_warp': ("UV Warp", 'UV_WARP', 'MOD_UVPROJECT'),
-    'pin_vertex_weight_edit': ("Vertex Weight Edit", 'VERTEX_WEIGHT_EDIT', 'MOD_VERTEX_WEIGHT'),
-    'pin_vertex_weight_mix': ("Vertex Weight Mix", 'VERTEX_WEIGHT_MIX', 'MOD_VERTEX_WEIGHT'),
-    'pin_vertex_weight_proximity': ("Vertex Weight Proximity", 'VERTEX_WEIGHT_PROXIMITY', 'MOD_VERTEX_WEIGHT'),
+    'pin_data_transfer': {"name": "Data Transfer", "kind": "MODIFIER", "type": 'DATA_TRANSFER', "icon": 'MOD_DATA_TRANSFER'},
+    'pin_mesh_cache': {"name": "Mesh Cache", "kind": "MODIFIER", "type": 'MESH_CACHE', "icon": 'MOD_MESHDEFORM'},
+    'pin_mesh_sequence_cache': {"name": "Mesh Sequence Cache", "kind": "MODIFIER", "type": 'MESH_SEQUENCE_CACHE', "icon": 'MOD_MESHDEFORM'},
+    'pin_uv_project': {"name": "UV Project", "kind": "MODIFIER", "type": 'UV_PROJECT', "icon": 'MOD_UVPROJECT'},
+    'pin_uv_warp': {"name": "UV Warp", "kind": "MODIFIER", "type": 'UV_WARP', "icon": 'MOD_UVPROJECT'},
+    'pin_vertex_weight_edit': {"name": "Vertex Weight Edit", "kind": "MODIFIER", "type": 'VERTEX_WEIGHT_EDIT', "icon": 'MOD_VERTEX_WEIGHT'},
+    'pin_vertex_weight_mix': {"name": "Vertex Weight Mix", "kind": "MODIFIER", "type": 'VERTEX_WEIGHT_MIX', "icon": 'MOD_VERTEX_WEIGHT'},
+    'pin_vertex_weight_proximity': {"name": "Vertex Weight Proximity", "kind": "MODIFIER", "type": 'VERTEX_WEIGHT_PROXIMITY', "icon": 'MOD_VERTEX_WEIGHT'},
+    
     # --- GENERATE SECTION ---
-    'pin_array': ("Array", 'ARRAY', 'MOD_ARRAY'),
-    'pin_bevel': ("Bevel", 'BEVEL', 'MOD_BEVEL'),
-    'pin_boolean': ("Boolean", 'BOOLEAN', 'MOD_BOOLEAN'),
-    'pin_build': ("Build", 'BUILD', 'MOD_BUILD'),
-# MISSING CURVE TO TUBE
-    'pin_decimate': ("Decimate", 'DECIMATE', 'MOD_DECIM'),
-    'pin_edge_split': ("Edge Split", 'EDGE_SPLIT', 'MOD_EDGESPLIT'),
-    'pin_mask': ("Mask", 'MASK', 'MOD_MASK'),
-    'pin_mirror': ("Mirror", 'MIRROR', 'MOD_MIRROR'),
-    'pin_multires': ("Multiresolution", 'MULTIRES', 'MOD_MULTIRES'),
-    'pin_remesh': ("Remesh", 'REMESH', 'MOD_REMESH'),
-# SCATTER ON SURFACE
-    'pin_screw': ("Screw", 'SCREW', 'MOD_SCREW'),
-    'pin_skin': ("Skin", 'SKIN', 'MOD_SKIN'),
-    'pin_solidify': ("Solidify", 'SOLIDIFY', 'MOD_SOLIDIFY'),
-    'pin_subsurf': ("Subdivision Surface", 'SUBSURF', 'MOD_SUBSURF'),
-    'pin_triangulate': ("Triangulate", 'TRIANGULATE', 'MOD_TRIANGULATE'),
-    'pin_volume_to_mesh': ("Volume to Mesh", 'VOLUME_TO_MESH', 'VOLUME_DATA'),
-    'pin_weld': ("Weld", 'WELD', 'AUTOMERGE_OFF'),
-    'pin_wireframe': ("Wireframe", 'WIREFRAME', 'MOD_WIREFRAME'),
+    'pin_array': {"name": "Array", "kind": "NODES", "node_group": "Array", "icon": 'MOD_ARRAY'},
+    'pin_array_legacy': {"name": "Array (Legacy)", "kind": "MODIFIER", "type": 'ARRAY', "icon": 'MOD_ARRAY'}, # Legacy Version
+    'pin_bevel': {"name": "Bevel", "kind": "MODIFIER", "type": 'BEVEL', "icon": 'MOD_BEVEL'},
+    'pin_boolean': {"name": "Boolean", "kind": "MODIFIER", "type": 'BOOLEAN', "icon": 'MOD_BOOLEAN'},
+    'pin_build': {"name": "Build", "kind": "MODIFIER", "type": 'BUILD', "icon": 'MOD_BUILD'},
+    'pin_curve_to_tube': {"name": "Curve to Tube", "kind": "NODES", "node_group": "Curve to Tube", "icon": 'GEOMETRY_NODES'},
+    'pin_decimate': {"name": "Decimate", "kind": "MODIFIER", "type": 'DECIMATE', "icon": 'MOD_DECIM'},
+    'pin_edge_split': {"name": "Edge Split", "kind": "MODIFIER", "type": 'EDGE_SPLIT', "icon": 'MOD_EDGESPLIT'},
+    'pin_mask': {"name": "Mask", "kind": "MODIFIER", "type": 'MASK', "icon": 'MOD_MASK'},
+    'pin_mirror': {"name": "Mirror", "kind": "MODIFIER", "type": 'MIRROR', "icon": 'MOD_MIRROR'},
+    'pin_multires': {"name": "Multiresolution", "kind": "MODIFIER", "type": 'MULTIRES', "icon": 'MOD_MULTIRES'},
+    'pin_remesh': {"name": "Remesh", "kind": "MODIFIER", "type": 'REMESH', "icon": 'MOD_REMESH'},
+    'pin_scatter_on_surface': {"name": "Scatter on Surface", "kind": "NODES", "node_group": "Scatter on Surface", "icon": 'GEOMETRY_NODES'},
+    'pin_screw': {"name": "Screw", "kind": "MODIFIER", "type": 'SCREW', "icon": 'MOD_SCREW'},
+    'pin_skin': {"name": "Skin", "kind": "MODIFIER", "type": 'SKIN', "icon": 'MOD_SKIN'},
+    'pin_solidify': {"name": "Solidify", "kind": "MODIFIER", "type": 'SOLIDIFY', "icon": 'MOD_SOLIDIFY'},
+    'pin_subsurf': {"name": "Subdivision Surface", "kind": "MODIFIER", "type": 'SUBSURF', "icon": 'MOD_SUBSURF'},
+    'pin_triangulate': {"name": "Triangulate", "kind": "MODIFIER", "type": 'TRIANGULATE', "icon": 'MOD_TRIANGULATE'},
+    'pin_volume_to_mesh': {"name": "Volume to Mesh", "kind": "MODIFIER", "type": 'VOLUME_TO_MESH', "icon": 'VOLUME_DATA'},
+    'pin_weld': {"name": "Weld", "kind": "MODIFIER", "type": 'WELD', "icon": 'AUTOMERGE_OFF'},
+    'pin_wireframe': {"name": "Wireframe", "kind": "MODIFIER", "type": 'WIREFRAME', "icon": 'MOD_WIREFRAME'},
+    
     # --- DEFORM SECTION ---
-    'pin_armature': ("Armature", 'ARMATURE', 'MOD_ARMATURE'),
-    'pin_cast': ("Cast", 'CAST', 'MOD_CAST'),
-    'pin_curve': ("Curve", 'CURVE', 'MOD_CURVE'),
-    'pin_displace': ("Displace", 'DISPLACE', 'MOD_DISPLACE'),
-    'pin_hook': ("Hook", 'HOOK', 'HOOK'),
-    'pin_laplaciandeform': ("Laplacian Deform", 'LAPLACIANDEFORM', 'MOD_MESHDEFORM'),
-    'pin_lattice': ("Lattice", 'LATTICE', 'MOD_LATTICE'),
-    'pin_mesh_deform': ("Mesh Deform", 'MESH_DEFORM', 'MOD_MESHDEFORM'),
-    'pin_shrinkwrap': ("Shrinkwrap", 'SHRINKWRAP', 'MOD_SHRINKWRAP'),
-    'pin_simple_deform': ("Simple Deform", 'SIMPLE_DEFORM', 'MOD_SIMPLEDEFORM'),
-    'pin_smooth': ("Smooth", 'SMOOTH', 'MOD_SMOOTH'),
-    'pin_corrective_smooth': ("Smooth Corrective", 'CORRECTIVE_SMOOTH', 'MOD_SMOOTH'),
-    'pin_laplaciansmooth': ("Smooth Laplacian", 'LAPLACIANSMOOTH', 'MOD_SMOOTH'),
-    'pin_surface_deform': ("Surface Deform", 'SURFACE_DEFORM', 'MOD_MESHDEFORM'),
-    'pin_warp': ("Warp", 'WARP', 'MOD_WARP'),
-    'pin_wave': ("Wave", 'WAVE', 'MOD_WAVE'),
+    'pin_armature': {"name": "Armature", "kind": "MODIFIER", "type": 'ARMATURE', "icon": 'MOD_ARMATURE'},
+    'pin_cast': {"name": "Cast", "kind": "MODIFIER", "type": 'CAST', "icon": 'MOD_CAST'},
+    'pin_curve': {"name": "Curve", "kind": "MODIFIER", "type": 'CURVE', "icon": 'MOD_CURVE'},
+    'pin_displace': {"name": "Displace", "kind": "MODIFIER", "type": 'DISPLACE', "icon": 'MOD_DISPLACE'},
+    'pin_hook': {"name": "Hook", "kind": "MODIFIER", "type": 'HOOK', "icon": 'HOOK'},
+    'pin_laplaciandeform': {"name": "Laplacian Deform", "kind": "MODIFIER", "type": 'LAPLACIANDEFORM', "icon": 'MOD_MESHDEFORM'},
+    'pin_lattice': {"name": "Lattice", "kind": "MODIFIER", "type": 'LATTICE', "icon": 'MOD_LATTICE'},
+    'pin_mesh_deform': {"name": "Mesh Deform", "kind": "MODIFIER", "type": 'MESH_DEFORM', "icon": 'MOD_MESHDEFORM'},
+    'pin_shrinkwrap': {"name": "Shrinkwrap", "kind": "MODIFIER", "type": 'SHRINKWRAP', "icon": 'MOD_SHRINKWRAP'},
+    'pin_simple_deform': {"name": "Simple Deform", "kind": "MODIFIER", "type": 'SIMPLE_DEFORM', "icon": 'MOD_SIMPLEDEFORM'},
+    'pin_smooth': {"name": "Smooth", "kind": "MODIFIER", "type": 'SMOOTH', "icon": 'MOD_SMOOTH'},
+    'pin_corrective_smooth': {"name": "Smooth Corrective", "kind": "MODIFIER", "type": 'CORRECTIVE_SMOOTH', "icon": 'MOD_SMOOTH'},
+    'pin_laplaciansmooth': {"name": "Smooth Laplacian", "kind": "MODIFIER", "type": 'LAPLACIANSMOOTH', "icon": 'MOD_SMOOTH'},
+    'pin_surface_deform': {"name": "Surface Deform", "kind": "MODIFIER", "type": 'SURFACE_DEFORM', "icon": 'MOD_MESHDEFORM'},
+    'pin_warp': {"name": "Warp", "kind": "MODIFIER", "type": 'WARP', "icon": 'MOD_WARP'},
+    'pin_wave': {"name": "Wave", "kind": "MODIFIER", "type": 'WAVE', "icon": 'MOD_WAVE'},
+    
     # --- NORMALS SECTION ---
-    'pin_normal_edit': ("Normal Edit", 'NORMAL_EDIT', 'MOD_NORMALEDIT'),
-    'pin_weighted_normal': ("Weighted Normal", 'WEIGHTED_NORMAL', 'MOD_NORMALEDIT'),
-    # missing smooth by angle
+    'pin_normal_edit': {"name": "Normal Edit", "kind": "MODIFIER", "type": 'NORMAL_EDIT', "icon": 'MOD_NORMALEDIT'},
+    'pin_weighted_normal': {"name": "Weighted Normal", "kind": "MODIFIER", "type": 'WEIGHTED_NORMAL', "icon": 'MOD_NORMALEDIT'},
+    'pin_smooth_by_angle': {"name": "Smooth by Angle", "kind": "NODES", "node_group": "Smooth by Angle", "icon": 'GEOMETRY_NODES'},
+    
     # --- PHYSICS SECTION ---
-    'pin_cloth': ("Cloth", 'CLOTH', 'MOD_CLOTH'),
-    'pin_collision': ("Collision", 'COLLISION', 'MOD_PHYSICS'),
-    'pin_dynamic_paint': ("Dynamic Paint", 'DYNAMIC_PAINT', 'MOD_DYNAMICPAINT'),
-    'pin_explode': ("Explode", 'EXPLODE', 'MOD_EXPLODE'),
-    'pin_fluid': ("Fluid", 'FLUID', 'MOD_FLUIDSIM'),
-    'pin_ocean': ("Ocean", 'OCEAN', 'MOD_OCEAN'),
-    'pin_particle_instance': ("Particle Instance", 'PARTICLE_INSTANCE', 'MOD_PARTICLE_INSTANCE'),
-    'pin_particle_system': ("Particle System", 'PARTICLE_SYSTEM', 'MOD_PARTICLES'),
-    'pin_soft_body': ("Soft Body", 'SOFT_BODY', 'MOD_SOFT'),
+    'pin_cloth': {"name": "Cloth", "kind": "MODIFIER", "type": 'CLOTH', "icon": 'MOD_CLOTH'},
+    'pin_collision': {"name": "Collision", "kind": "MODIFIER", "type": 'COLLISION', "icon": 'MOD_PHYSICS'},
+    'pin_dynamic_paint': {"name": "Dynamic Paint", "kind": "MODIFIER", "type": 'DYNAMIC_PAINT', "icon": 'MOD_DYNAMICPAINT'},
+    'pin_explode': {"name": "Explode", "kind": "MODIFIER", "type": 'EXPLODE', "icon": 'MOD_EXPLODE'},
+    'pin_fluid': {"name": "Fluid", "kind": "MODIFIER", "type": 'FLUID', "icon": 'MOD_FLUIDSIM'},
+    'pin_ocean': {"name": "Ocean", "kind": "MODIFIER", "type": 'OCEAN', "icon": 'MOD_OCEAN'},
+    'pin_particle_instance': {"name": "Particle Instance", "kind": "MODIFIER", "type": 'PARTICLE_INSTANCE', "icon": 'MOD_PARTICLE_INSTANCE'},
+    'pin_particle_system': {"name": "Particle System", "kind": "MODIFIER", "type": 'PARTICLE_SYSTEM', "icon": 'MOD_PARTICLES'},
+    'pin_soft_body': {"name": "Soft Body", "kind": "MODIFIER", "type": 'SOFT_BODY', "icon": 'MOD_SOFT'},
 }
 
 def get_config_path():
@@ -110,7 +115,6 @@ def deferred_save():
             json.dump(settings, f, indent=4)
     except Exception as e:
         print(f"Pinned Modifiers Addon: Could not save preferences: {e}")
-
     # Return None so the timer does not repeat
     return None
 
@@ -118,7 +122,6 @@ def save_settings(self, context):
     """Property update callback with trailing-edge debounce (defined timer after last change)."""
     if getattr(self, "is_initial_loading", False):
         return
-
     # Cancel any pending save and schedule a new one
     if bpy.app.timers.is_registered(deferred_save):
         bpy.app.timers.unregister(deferred_save)
@@ -135,7 +138,6 @@ class PINNEDMODIFIERS_OT_export_settings(bpy.types.Operator, ExportHelper):
     bl_idname = "pinned_modifiers.export_settings"
     bl_label = "Export Config"
     bl_description = "Export current pinned modifiers configuration to a JSON file"
-
     filepath: bpy.props.StringProperty(subtype='FILE_PATH')
     filename_ext = ".json"
     filter_glob: bpy.props.StringProperty(default="*.json", options={'HIDDEN'})
@@ -167,7 +169,6 @@ class PINNEDMODIFIERS_OT_import_settings(bpy.types.Operator, ImportHelper):
     bl_idname = "pinned_modifiers.import_settings"
     bl_label = "Import Config"
     bl_description = "Import pinned modifiers configuration from a JSON file"
-
     filename_ext = ".json"
     filter_glob: bpy.props.StringProperty(default="*.json", options={'HIDDEN'})
 
@@ -176,8 +177,7 @@ class PINNEDMODIFIERS_OT_import_settings(bpy.types.Operator, ImportHelper):
         try:
             with open(self.filepath, 'r') as f:
                 settings = json.load(f)
-            
-            # The properties will trigger update=save_settings, which perfectly debounces
+
             for key, val in settings.items():
                 if hasattr(prefs, key):
                     setattr(prefs, key, val)
@@ -199,7 +199,6 @@ class PINNEDMODIFIERS_OT_reset_settings(bpy.types.Operator):
     def execute(self, context):
         prefs = context.preferences.addons[__name__].preferences
         try:
-            # The properties will trigger update=save_settings, which perfectly debounces
             for key in AVAILABLE_MODIFIERS.keys():
                 default_val = prefs.bl_rna.properties[key].default
                 setattr(prefs, key, default_val)
@@ -226,7 +225,66 @@ class PINNEDMODIFIERS_OT_open_prefs(bpy.types.Operator):
         return {'FINISHED'}
 
 
-# --- REORDERING OPERATOR ---
+# --- ACTION OPERATORS ---
+
+class PINNEDMODIFIERS_OT_add_pinned(bpy.types.Operator):
+    bl_idname = "pinned_modifiers.add_pinned"
+    bl_label = "Add Pinned Modifier"
+    bl_description = "Adds the selected modifier to the active object"
+    
+    item_key: bpy.props.StringProperty()
+    
+    def execute(self, context):
+        obj = context.object
+        if not obj:
+            self.report({'WARNING'}, "No active object selected")
+            return {'CANCELLED'}
+            
+        item = AVAILABLE_MODIFIERS.get(self.item_key)
+        if not item:
+            return {'CANCELLED'}
+            
+        if item["kind"] == "MODIFIER":
+            bpy.ops.object.modifier_add(type=item["type"])
+            
+        elif item["kind"] == "NODES":
+            ng_name = item.get("node_group")
+            
+            # Check if it already exists in the local file memory
+            ng = bpy.data.node_groups.get(ng_name)
+            
+            if ng:
+                # Local assignment
+                mod = obj.modifiers.new(name=item["name"], type='NODES')
+                mod.node_group = ng
+            else:
+                # Fallback: Dictionary for Blender 5.1 Essentials paths
+                # Format: "nodes/geometry_nodes_essentials.blend/NodeTree/Asset Name"
+                essential_paths = {
+                    "Curve to Tube": "nodes/geometry_nodes_essentials.blend/NodeTree/Curve to Tube",
+                    "Scatter on Surface": "nodes/geometry_nodes_essentials.blend/NodeTree/Scatter on Surface",
+                    "Array": "nodes/geometry_nodes_essentials.blend/NodeTree/Array",
+                    "Smooth by Angle": "nodes/geometry_nodes_essentials.blend/NodeTree/Smooth by Angle"
+                }
+                
+                asset_path = essential_paths.get(ng_name)
+                
+                if asset_path:
+                    try:
+                        # Forward slashes are safe on both Windows and Linux in Blender Python
+                        bpy.ops.object.modifier_add_node_group(
+                            asset_library_type="ESSENTIALS", 
+                            asset_library_identifier="", 
+                            relative_asset_identifier=asset_path
+                        )
+                    except Exception as e:
+                        self.report({'ERROR'}, f"Could not load asset. Internal error: {e}")
+                        return {'CANCELLED'}
+                else:
+                    self.report({'WARNING'}, f"Node Group '{ng_name}' missing and not found in Essentials path dictionary!")
+                    return {'CANCELLED'}
+                
+        return {'FINISHED'}
 
 class PINNEDMODIFIERS_OT_move_item(bpy.types.Operator):
     bl_idname = "pinned_modifiers.move_item"
@@ -300,17 +358,21 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
     pin_vertex_weight_edit: make_prop("Vertex Weight Edit", False)
     pin_vertex_weight_mix: make_prop("Vertex Weight Mix", False)
     pin_vertex_weight_proximity: make_prop("Vertex Weight Proximity", False)
+    
     # --- GENERATE SECTION ---
     pin_array: make_prop("Array", True)
+    pin_array_legacy: make_prop("Array (Legacy)", False)
     pin_bevel: make_prop("Bevel", True)
     pin_boolean: make_prop("Boolean", True)
     pin_build: make_prop("Build", False)
+    pin_curve_to_tube: make_prop("Curve to Tube", False)
     pin_decimate: make_prop("Decimate", False)
     pin_edge_split: make_prop("Edge Split", False)
     pin_mask: make_prop("Mask", False)
     pin_mirror: make_prop("Mirror", True)
     pin_multires: make_prop("Multiresolution", False)
     pin_remesh: make_prop("Remesh", False)
+    pin_scatter_on_surface: make_prop("Scatter on Surface", False)
     pin_screw: make_prop("Screw", False)
     pin_skin: make_prop("Skin", False)
     pin_solidify: make_prop("Solidify", False)
@@ -319,6 +381,7 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
     pin_volume_to_mesh: make_prop("Volume to Mesh", False)
     pin_weld: make_prop("Weld", True)
     pin_wireframe: make_prop("Wireframe", False)
+    
     # --- DEFORM SECTION ---
     pin_armature: make_prop("Armature", False)
     pin_cast: make_prop("Cast", False)
@@ -336,9 +399,12 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
     pin_surface_deform: make_prop("Surface Deform", False)
     pin_warp: make_prop("Warp", False)
     pin_wave: make_prop("Wave", False)
+    
     # --- NORMALS SECTION ---
     pin_normal_edit: make_prop("Normal Edit", False)
     pin_weighted_normal: make_prop("Weighted Normal", False)
+    pin_smooth_by_angle: make_prop("Smooth by Angle", False)
+    
     # --- PHYSICS SECTION ---
     pin_cloth: make_prop("Cloth", False)
     pin_collision: make_prop("Collision", False)
@@ -352,7 +418,6 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
 
     def draw(self, context):
         layout = self.layout
-        
         config_path = get_config_path()
         box = layout.box()
         box.label(text=f"Settings are permanently saved to: {config_path}", icon='INFO')
@@ -372,13 +437,13 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
         
         for i, key in enumerate(keys):
             target_col = cols[i // items_per_col]
-            icon_string = AVAILABLE_MODIFIERS[key][2]
+            icon_string = AVAILABLE_MODIFIERS[key]["icon"]
             target_col.prop(self, key, icon=icon_string)
             
         layout.separator()
         layout.prop(self, "show_settings_button", icon='PREFERENCES')
         layout.separator()
-        # --- REORDERING SECTION ---
+        
         active = [k for k in keys if getattr(self, k)]
         order = [k for k in self.pinned_order.split(',') if k]
         
@@ -396,9 +461,9 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
             
             for idx, key in enumerate(final_order):
                 row = reorder_box.row(align=True)
-                name, mod_type, icon_string = AVAILABLE_MODIFIERS[key]
+                name = AVAILABLE_MODIFIERS[key]["name"]
+                icon_string = AVAILABLE_MODIFIERS[key]["icon"]
                 
-                # BOTTOM BUTTON
                 if idx < len(final_order) - 1:
                     bot_btn = row.operator("pinned_modifiers.move_item", text="", icon='TRIA_DOWN_BAR')
                     bot_btn.item_key = key
@@ -406,7 +471,6 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
                 else:
                     row.label(text="", icon='BLANK1')
                     
-                # TOP BUTTON
                 if idx > 0:
                     top_btn = row.operator("pinned_modifiers.move_item", text="", icon='TRIA_UP_BAR')
                     top_btn.item_key = key
@@ -414,7 +478,6 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
                 else:
                     row.label(text="", icon='BLANK1')
                     
-                # DOWN BUTTON
                 if idx < len(final_order) - 1:
                     down_btn = row.operator("pinned_modifiers.move_item", text="", icon='TRIA_DOWN')
                     down_btn.item_key = key
@@ -422,29 +485,24 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
                 else:
                     row.label(text="", icon='BLANK1')
                     
-                # UP BUTTON
                 if idx > 0:
                     up_btn = row.operator("pinned_modifiers.move_item", text="", icon='TRIA_UP')
                     up_btn.item_key = key
                     up_btn.direction = 'UP'
                 else:
                     row.label(text="", icon='BLANK1')
-                    
                 
-                # MODIFIER LABEL
                 row.label(text=name, icon=icon_string)
                     
             layout.separator()
         
         # --- SUPPORT & LINKS SECTION ---
         support_box = layout.box()
-        
         header_row = support_box.row()
         header_row.alignment = 'CENTER'
         header_row.label(text="If this add-on saves you time, please consider supporting its development!", icon='HEART')
         
         support_box.separator()
-        
         support_row = support_box.row(align=True)
         support_row.scale_y = 1.2  
         
@@ -461,7 +519,6 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
 # --- MENU INJECTION & REGISTRATION ---
 
 def draw_pinned_modifiers_top(self, context):
-    """Draws the pinned modifiers at the top of the menu."""
     layout = self.layout
     prefs = context.preferences.addons[__name__].preferences
     
@@ -478,13 +535,13 @@ def draw_pinned_modifiers_top(self, context):
             
     if final_order:
         for key in final_order:
-            name, mod_type, icon_string = AVAILABLE_MODIFIERS[key]
-            layout.operator("object.modifier_add", text=name, icon=icon_string).type = mod_type
+            item = AVAILABLE_MODIFIERS[key]
+            op = layout.operator("pinned_modifiers.add_pinned", text=item["name"], icon=item["icon"])
+            op.item_key = key
             
         layout.separator()
 
 def draw_pinned_modifiers_bottom(self, context):
-    """Draws the settings button below the default Blender folders."""
     prefs = context.preferences.addons[__name__].preferences
     if getattr(prefs, "show_settings_button", True):
         layout = self.layout
@@ -497,6 +554,7 @@ classes = (
     PINNEDMODIFIERS_OT_import_settings,
     PINNEDMODIFIERS_OT_reset_settings,
     PINNEDMODIFIERS_OT_open_prefs,
+    PINNEDMODIFIERS_OT_add_pinned,
     PINNEDMODIFIERS_OT_move_item,
     PinnedModifiersPreferences,
 )
@@ -510,7 +568,6 @@ def register():
     
     try:
         prefs = bpy.context.preferences.addons[__name__].preferences
-        # Flag to prevent dummy saving during addon initialization
         prefs.is_initial_loading = True 
         
         saved_settings = load_settings()

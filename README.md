@@ -1,6 +1,6 @@
 # 🔧📌 Pinned Modifiers for Blender
 
-![Blender Version](https://img.shields.io/badge/Blender-4.0+-orange.svg?style=flat-square&logo=blender)
+![Blender Version](https://img.shields.io/badge/Blender-4.3+-orange.svg?style=flat-square&logo=blender)
 ![License](https://img.shields.io/badge/License-GPL_3.0-blue.svg?style=flat-square)
 
 **Pinned Modifiers** is a Blender add-on designed to speed up our modeling workflow. It allows us to select our most frequently used modifiers and pin them directly to the "Add Modifier" menu for one-click access.
@@ -16,8 +16,8 @@
 
 ## ⚙️ Compatibility
 
-* **Supported:** Blender 4.2 -> 5.1.1+
-* **Supported with caveats:** Blender 4.0 -> 4.2 *(only direct import of the `__init__.py` python file)*
+* **Supported:** Blender 4.3 -> 5.1.1+
+* **Supported with caveats:** Blender 4.2 *(pinned Geometry Nodes based modifiers won't work, path changed)*
 * **Not Supported:** Blender 3.6 LTS and older. *(This add-on relies on the dynamic "Add Modifier" menu system introduced in Blender 4.0).*
 
 ## 📥 Installation

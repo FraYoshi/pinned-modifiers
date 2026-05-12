@@ -1,0 +1,17 @@
+schema_version = "1.0.0"
+
+id = "pinned_modifiers"
+name = "Pinned Modifiers"
+tagline = "Pins favorite modifiers to the Add Modifier menu"
+version = "1.0.0"
+type = "add-on"
+
+tags = ["User Interface", "Modeling"]
+blender_version_min = "4.2.0"
+maintainer = "Francesco Yoshi Gobbo <dev@furayoshi.com>"
+license = ["SPDX:GPL-3.0-or-later"]
+
+website = "https://github.com/FraYoshi/pinned-modifiers"
+
+[permissions]
+files = "Save and load custom pinned modifiers preferences"

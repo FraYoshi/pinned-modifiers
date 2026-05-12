@@ -5,6 +5,8 @@
 
 **Pinned Modifiers** is a Blender add-on designed to speed up our modeling workflow. It allows us to select our most frequently used modifiers and pin them directly to the "Add Modifier" menu for one-click access.
 
+![thumbnail](pinned-modifiers-thumb.webp)
+
 ## ✨ Features
 
 * **Pin Any Modifier:** Toggle which modifiers you want to appear in your quick-access list.

@@ -429,21 +429,43 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
         
         layout.separator()
         
-        grid_row = layout.row()
-        cols = [grid_row.column() for _ in range(4)]
-        
+        # --- MODIFIERS CATEGORIES SEPARATION ---
         keys = list(AVAILABLE_MODIFIERS.keys())
-        items_per_col = len(keys) // 4 + 1
         
-        for i, key in enumerate(keys):
-            target_col = cols[i // items_per_col]
-            icon_string = AVAILABLE_MODIFIERS[key]["icon"]
-            target_col.prop(self, key, icon=icon_string)
+        # Slicing the keys based on the order of AVAILABLE_MODIFIERS
+        categories = {
+            "Edit": keys[0:8],
+            "Generate": keys[8:29],
+            "Deform": keys[29:45],
+            "Normals": keys[45:48],
+            "Physics": keys[48:]
+        }
+        
+        for cat_name, cat_keys in categories.items():
+            # Add a section label for the category
+            layout.label(text=f"{cat_name}", icon='DOT')
+            
+            grid_row = layout.row()
+            cols = [grid_row.column() for _ in range(4)]
+            
+            # Calculate how many items fit in each column for this specific category
+            items_per_col = (len(cat_keys) + 3) // 4
+            
+            for i, key in enumerate(cat_keys):
+                # Ensure we don't go out of bounds if distribution is slightly uneven
+                col_index = min(i // items_per_col, 3) 
+                target_col = cols[col_index]
+                
+                icon_string = AVAILABLE_MODIFIERS[key]["icon"]
+                target_col.prop(self, key, icon=icon_string)
+                
+            layout.separator()
             
         layout.separator()
         layout.prop(self, "show_settings_button", icon='PREFERENCES')
         layout.separator()
         
+        # --- REORDER PINNED MODIFIERS ---
         active = [k for k in keys if getattr(self, k)]
         order = [k for k in self.pinned_order.split(',') if k]
         
@@ -511,7 +533,7 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
         support_row.operator("wm.url_open", text="More Ways to Support", icon='URL').url = "https://furayoshi.com/support"
         
         links_row = support_box.row(align=True)
-        links_row.operator("wm.url_open", text="Source Code & Issues", icon='HELP').url = "https://github.com/FraYoshi/pinned-modifiers-blender"
+        links_row.operator("wm.url_open", text="Source Code & Issues", icon='HELP').url = "https://github.com/FraYoshi/pinned-modifiers"
         links_row.operator("wm.url_open", text="Discord invite", icon='COMMUNITY').url = "https://furayoshi.com/discord"
         links_row.operator("wm.url_open", text="Homepage (furayoshi.com)", icon='WORLD_DATA').url = "https://furayoshi.com"
 

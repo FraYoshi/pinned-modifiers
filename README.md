@@ -39,6 +39,8 @@
 3. A new **Reorder Pinned Modifiers** section will dynamically appear. Use the arrows to set your preferred vertical order.
 4. Close the preferences. Open the **Properties Panel > Modifiers Tab** and click **Add Modifier**. Your pinned modifiers will be sitting right at the top!
 
+![preferences overview](media/pinned-modifiers-preferences-overview.webp)
+
 ### 📂 Where are my settings saved?
 Your preferences are saved locally to a lightweight `.json` file inside your user configuration folder. The exact path for your specific operating system is displayed at the top of the add-on preferences panel.
 

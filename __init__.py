@@ -533,7 +533,7 @@ class PinnedModifiersPreferences(bpy.types.AddonPreferences):
         support_row.operator("wm.url_open", text="More Ways to Support", icon='URL').url = "https://furayoshi.com/support"
         
         links_row = support_box.row(align=True)
-        links_row.operator("wm.url_open", text="Source Code & Issues", icon='HELP').url = "https://github.com/FraYoshi/pinned-modifiers"
+        links_row.operator("wm.url_open", text="Source Code & Issues", icon='HELP').url = "https://github.com/FraYoshi/blender-pinned-modifiers"
         links_row.operator("wm.url_open", text="Discord invite", icon='COMMUNITY').url = "https://furayoshi.com/discord"
         links_row.operator("wm.url_open", text="Homepage (furayoshi.com)", icon='WORLD_DATA').url = "https://furayoshi.com"
 

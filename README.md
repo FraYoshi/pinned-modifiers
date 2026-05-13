@@ -57,4 +57,4 @@ If this add-on saves you time and improves your Blender workflow, please conside
 
 ## 🐛 Bug Reports & Feature Requests
 
-Found a bug or have an idea to make this add-on better? Please open an issue on the [GitHub Issues page](https://github.com/FraYoshi/pinned-modifiers/issues).
+Found a bug or have an idea to make this add-on better? Please open an issue on the [GitHub Issues page](https://github.com/FraYoshi/blender-pinned-modifiers/issues).

@@ -35,9 +35,9 @@
 ## ✏️ How to Use
 
 1. Navigate to **Edit > Preferences > Add-ons** and expand the **Pinned Modifiers** add-on menu.
-2. Under "Select modifiers to pin to the menu", check the boxes for your favorite modifiers.
-3. A new **Reorder Pinned Modifiers** section will dynamically appear. Use the arrows to set your preferred vertical order.
-4. Close the preferences. Open the **Properties Panel > Modifiers Tab** and click **Add Modifier**. Your pinned modifiers will be sitting right at the top!
+2. check the boxes for your favorite modifiers, and reorder them at your liking from the section at the bottom.
+3. The **Reorder Pinned Modifiers** section will populate with the chosen modifiers. Use the arrows to set your preferred vertical order.
+4. Close the preferences. Open the **Modifiers Tab** and click **Add Modifier**. Your pinned modifiers will be sitting right at the top!
 
 ![preferences overview](media/pinned-modifiers-preferences-overview.webp)
 

@@ -25,7 +25,7 @@
 ## 📥 Installation
 
 ### Drag and Drop
-1. Download the latest `pinned_modifiers.zip` file from the Releases page.
+1. Download the latest `pinned-modifiers.zip` file from the Releases page.
 
 ### Legacy Method
 1. go to **Edit > Preferences > Add-ons**

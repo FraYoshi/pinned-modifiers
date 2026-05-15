@@ -10,7 +10,7 @@
 ## ✨ Features
 
 * **Pin Any Modifier:** Toggle which modifiers you want to appear in your quick-access list.
-* **Custom Reordering:** Use the intuitive `[ ⤒ | ↑ | ↓ | ⤓ ]` UI controls to arrange your pinned modifiers in the exact order you want.
+* **Custom Reordering:** Use the `[ ⤒ | ↑ | ↓ | ⤓ ]` UI controls to arrange your pinned modifiers in the order you want.
 * **Persistent Settings:** Your configuration is written to a `JSON` file. Settings permanently survive Blender restarts, add-on reloads, and updates.
 * **Export / Import:** Easily back up your personalized modifier stack or share your layout across multiple workstations and operating systems.
 * **Reset to Defaults:** Messed up your list? Restore the default configuration with a single click. Just remember to export your settings, in case you want to restore them later!
@@ -33,6 +33,9 @@
 3. Enable the checkbox next to **Interface: Pinned Modifiers**.
 
 ## ✏️ How to Use
+**Video tutorial**:
+
+[![watch the video tutorial](media/pinned-modifiers-play.webp)](http://www.youtube.com/watch?v=qZQRErAZfzI "Pinned Modifiers Blender Addon - an overview on the v1.0.0 of the addon")
 
 1. Navigate to **Edit > Preferences > Add-ons** and expand the **Pinned Modifiers** add-on menu.
 2. check the boxes for your favorite modifiers, and reorder them at your liking from the section at the bottom.
